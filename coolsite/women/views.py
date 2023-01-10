@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Women
 
 # Create your views here.
-menu = ["About Site", "Add Article", "Remove Article", "Leave Comment"]
+menu = ["About Site", "Add Article", "Feedback", "Sign In"]
 def index(request): #link to class HttpRequest
     posts = Women.objects.all()
     return render(request, 'women/index.html', {
