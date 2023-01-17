@@ -3,7 +3,11 @@ from django.shortcuts import render, redirect
 from .models import Women
 
 # Create your views here.
-menu = ["About Site", "Add Article", "Feedback", "Sign In"]
+menu = [{'title': 'About', 'url_name': 'about'},
+        {'title': 'Add Article', 'url_name': 'add_page'},
+        {'title': 'Contacts', 'url_name': 'contact'},
+        {'title': 'Sign In', 'url_name': 'login'}
+        ]
 def index(request): #link to class HttpRequest
     posts = Women.objects.all()
     return render(request, 'women/index.html', {
@@ -18,18 +22,17 @@ def about(request):
         'menu': menu,
     })
 
-def categories(request, catid):
-    if request.GET:
-        print(request.GET)
+def addpage(request):
+    return HttpResponse('Adding Article')
 
-    return HttpResponse(f'<h1>Articles under the categories</h1><p>{catid}</p>')
+def contact(request):
+    return HttpResponse('Contacts')
 
-
-def archive(request, year):
-    if int(year) > 2020:
-        return redirect('home', permanent=True)
-
-    return HttpResponse(f'<h1>Years Archive</h1><p>{year}</p>')
+def login(request):
+    return HttpResponse('Signing In')
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound("<h1>Page doesn't found</h1>")
+
+def show_post(request, post_id):
+    return HttpResponse(f'Showing article referenced with id = {post_id}')
