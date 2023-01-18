@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
-from .models import Women
+from .models import Women, Category
 
 # Create your views here.
 menu = [{'title': 'About', 'url_name': 'about'},
@@ -10,10 +10,13 @@ menu = [{'title': 'About', 'url_name': 'about'},
         ]
 def index(request): #link to class HttpRequest
     posts = Women.objects.all()
+    categories = Category.objects.all()
     return render(request, 'women/index.html', {
         'title': 'Main Page',
         'menu': menu,
         'posts': posts,
+        'categories': categories,
+        'cat_selected': 0,
     })
 
 def about(request):
@@ -36,3 +39,19 @@ def pageNotFound(request, exception):
 
 def show_post(request, post_id):
     return HttpResponse(f'Showing article referenced with id = {post_id}')
+
+def show_category(request, cat_id):
+
+    posts = Women.objects.filter(cat_id=cat_id)
+    categories = Category.objects.all()
+
+    if len(posts) == 0:
+        raise Http404()
+
+    return render(request, 'women/index.html', {
+        'title': 'Display by Categories',
+        'menu': menu,
+        'posts': posts,
+        'categories': categories,
+        'cat_selected': cat_id,
+    })
