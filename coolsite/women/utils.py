@@ -6,7 +6,6 @@ from women.models import Category, Women
 menu = [{'title': 'About', 'url_name': 'about'},
         {'title': 'Add Article', 'url_name': 'add_page'},
         {'title': 'Contacts', 'url_name': 'contact'},
-        {'title': 'Sign In', 'url_name': 'login'}
 ]
 
 
